@@ -1,0 +1,50 @@
+
+// ACT example for simulating circuits at different abstraction levels (prs, device and spice blackbox).  
+// April 2023
+// Thomas Jagielski and Karthi Srinivasan
+
+// NOTE 1: Signals which are outputs from a Xyce call do not show up in the actsim prompt output. For example, in this case, only transitions of d_in and d_out show up in actsim. The other signals, x_in and x_out are stored in the xyce output files (format specified in inv.conf). 
+
+// NOTE 2: Directions (!/?) on ports for processes MUST be specified if they are to be handed off to Xyce for simulation, since actsim needs to know which signals to pass as inputs to Xyce and which to read back and use.
+
+import globals;
+
+// Inverter specified using production rules, simulated using actsim at prs level
+defproc dinv (bool? in; bool! out) {
+    prs {
+        in => out-
+    }
+}
+
+// Inverter specified using production rules, simulated via Xyce call through actsim, at device level
+// This specification is made in the inv.conf file
+defproc ainv (bool? in; bool! out) {
+    prs * {
+        in => out-
+    }
+}
+
+// Inverter specified as spice blackbox, with the associaed netlist in spiceinv.sp
+// Also simulated via Xyce call through actsim
+// This specification is also made in the inv.conf file in the macros body
+defproc spiceinv (bool? in; bool! out) { }
+
+
+// Chain of three inverters, one of each type mentioned above
+defproc inv_chain() {
+    bool d_in, d_out;
+    bool x_in, x_out;
+
+    dinv d(d_in, d_out);
+    ainv a(d_out, x_in);
+    spiceinv x(x_in, x_out);
+    // ainv x(x_in, x_out);
+
+}
+
+// Test instance
+defproc test () {
+    inv_chain inv();
+}
+
+test t;

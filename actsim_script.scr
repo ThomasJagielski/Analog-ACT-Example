@@ -1,0 +1,27 @@
+# watch inv.x_out inv.d_out inv.x_in
+# set inv.x_out 0 
+# step 1000
+
+watch inv.d_in
+watch inv.d_out
+watch inv.x_in
+watch inv.x_out
+
+set inv.d_in 0
+step 1000
+set inv.d_in 1
+step 1000
+set inv.d_in 0
+step 1000
+set inv.d_in 1
+step 1000
+set inv.d_in 0
+step 1000
+set inv.d_in 1
+step 1000
+
+
+
+
+
+
