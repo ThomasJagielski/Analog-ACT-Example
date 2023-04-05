@@ -10,6 +10,8 @@ A chain of inverters is simulated using three different methods:
  
 Run using ./run_actsim.sh, which just runs `actsim -Tsky130l -cnf=inv.conf inv.act test < actsim_script.scr`
 
+Note: Requires actsim to be built with Xyce. Refer to [building actsim with Xyce](https://github.com/rmanohar/actsim#building-with-xyce).
+
 The necessary specifications to handoff the analog portion of the simulation to Xyce are made in the `inv.conf` file. 
 
 List of files:
